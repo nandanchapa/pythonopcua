@@ -10,4 +10,4 @@ optionally publishes the data to AWS IoT Core.
 
 ## Usage
 - Set `ENABLE_AWS = True` in `server.py` to enable cloud publishing.
-- Run the server: `python server.py`
+- Run the server: `python opcserver.py`
