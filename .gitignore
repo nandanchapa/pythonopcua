@@ -1,0 +1,11 @@
+# Ignore the virtual environment
+venv/
+__pycache__/
+
+# Ignore AWS credentials and certificates
+*.pem
+*.crt
+*.key
+
+# VS Code
+.vscode/
