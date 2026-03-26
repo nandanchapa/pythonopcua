@@ -101,3 +101,12 @@ graph TD
     class CERT,KEY,ROOT auth;
     class IOT,POL,THG,TOPIC cloud;
 ```
+
+### AWS IoT Console Output
+![AWS IoT MQTT Client](assets/images/AWSIoTCore_MQTTClient.png)
+
+### OPC UA Server Execution
+![Terminal Output](assets/images/Python_OPCUA_Server.png)
+
+### OPC UA Publish Data to AWS IoTCore
+![AWS IoT Core Publish](assets/images/PythonOPCUA_AWSIoTCore_Publish.png)
