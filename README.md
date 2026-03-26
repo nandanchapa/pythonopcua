@@ -1,4 +1,4 @@
-# Python OPC UA to AWS IoT Bridge
+# Python OPC UA to AWS IoT Core
 
 This project runs an OPC UA Server that generates 4 random sensor nodes and 
 optionally publishes the data to AWS IoT Core.
