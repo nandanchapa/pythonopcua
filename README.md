@@ -58,7 +58,6 @@ graph TD
         A[Python Script: opcuaserver.py]
         B[(OPC UA Address Space)]
         
-        %% Files generated/downloaded
         subgraph Auth ["Security Credentials"]
             CERT[certificate.pem.crt]
             KEY[private.pem.key]
@@ -70,24 +69,26 @@ graph TD
         IOT[AWS IoT Gateway]
         POL[IoT Policy]
         THG[IoT Thing]
-        TOPIC[MQTT Topic: <br/>nandan/opcua/sensors]
+        TOPIC["MQTT Topic:<br/>nandan/opcua/sensors"]
     end
 
     %% Provisioning Connections
-    TF -.->|Creates| THG
-    TF -.->|Attaches| POL
-    TF -.->|Generates| CERT
-    TF -.->|Generates| KEY
-    CA_DL -.->|Downloads| ROOT
+    TF -.-> THG
+    TF -.-> POL
+    TF -.-> CERT
+    TF -.-> KEY
+    CA_DL -.-> ROOT
 
     %% Runtime Connections
-    A -->|Reads Nodes| B
+    A --> B
     
-    %% The Secure Handshake
-    CERT & KEY & ROOT -->|TLS Auth| A
+    %% Expanded connections for better GitHub compatibility
+    CERT --> A
+    KEY --> A
+    ROOT --> A
     
-    A ===|Secure MQTT Port: 8883| IOT
-    IOT -->|Publishes| TOPIC
+    A ===|"Secure MQTT (8883)"| IOT
+    IOT --> TOPIC
 
     %% Styling
     classDef provision fill:#fff3e0,stroke:#e65100,stroke-width:2px,color:#000;
