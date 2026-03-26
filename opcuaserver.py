@@ -5,10 +5,10 @@ import logging
 from asyncua import Server
 from AWSIoTPythonSDK.MQTTLib import AWSIoTMQTTClient
 
-# --- CONFIGURATION ---
-ENABLE_AWS = False  # Set to True to enable AWS IoT, False to run local only
+# --- AWS CONFIGURATION ---
+ENABLE_AWS = True  # Set to True to enable AWS IoT, False to run local only
 
-AWS_ENDPOINT = "your-endpoint-ats.iot.us-east-1.amazonaws.com"
+AWS_ENDPOINT = "awsiotcoreendpoint-ats.iot.us-east-1.amazonaws.com"
 CLIENT_ID = "OPCUA_Client"
 PATH_TO_CERT = "certificate.pem.crt"
 PATH_TO_KEY = "private.pem.key"
@@ -18,28 +18,33 @@ TOPIC = "nandan/opcua/sensors"
 def init_aws_mqtt():
     """Initializes the AWS MQTT Client."""
     if not ENABLE_AWS:
-        return None
-    
+         return None
+   
     try:
+
         mqtt_client = AWSIoTMQTTClient(CLIENT_ID)
         mqtt_client.configureEndpoint(AWS_ENDPOINT, 8883)
         mqtt_client.configureCredentials(PATH_TO_ROOT_CA, PATH_TO_KEY, PATH_TO_CERT)
         
-        mqtt_client.configureAutoReconnectBackoffTime(1, 32, 20)
-        mqtt_client.configureOfflinePublishQueueing(-1)
-        mqtt_client.configureDrainingFrequency(2)
-        mqtt_client.configureConnectDisconnectTimeout(10)
-        mqtt_client.configureMQTTOperationTimeout(5)
+        print(f"--- Attempting to connect to {AWS_ENDPOINT} ---")
+        connection_success = mqtt_client.connect()
         
-        mqtt_client.connect()
-        print("Successfully connected to AWS IoT Core")
-        return mqtt_client
+        if connection_success:
+            print("--- SUCCESS: Connected to AWS IoT Core ---")
+            return mqtt_client
+        else:
+            print("--- FAILURE: Connection returned False (Check IoT Policy/Cert) ---")
+            return None
+
     except Exception as e:
-        print(f"AWS Connection Error: {e}")
+        print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+        print(f"CRITICAL AWS ERROR: {e}")
+        print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
         return None
 
 def publish_to_aws(mqtt_client, payload):
     """Helper function to publish data only if client is active."""
+    
     if ENABLE_AWS and mqtt_client:
         mqtt_client.publish(TOPIC, json.dumps(payload), 1)
         print(f"Published to AWS: {payload}")
@@ -47,7 +52,7 @@ def publish_to_aws(mqtt_client, payload):
 async def main():
     # 1. Initialize AWS (Returns None if ENABLE_AWS is False)
     mqtt_client = init_aws_mqtt()
-
+    
     # 2. Initialize OPC UA Server
     server = Server()
     await server.init()
@@ -71,16 +76,15 @@ async def main():
             payload = {}
             for i, node in enumerate(nodes):
                 val = round(random.uniform(10.0, 100.0), 2)
-                
-                # Update OPC UA Node (Always happens)
+                # Update OPC UA Nodes 
                 await node.write_value(val)
                 payload[f"sensor_{i+1}"] = val
-                print(f"Server Values Updated: {payload}")
             # 4. Attempt to Publish (Logic is hidden inside the function)
             publish_to_aws(mqtt_client, payload)
+            print(f"Final Payload: {payload}")
 
             await asyncio.sleep(2)
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO)
+    logging.basicConfig(level=logging.ERROR)
     asyncio.run(main())
