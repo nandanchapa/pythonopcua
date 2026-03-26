@@ -69,7 +69,7 @@ graph TD
         IOT[AWS IoT Gateway]
         POL[IoT Policy]
         THG[IoT Thing]
-        TOPIC["MQTT Topic:<br/>nandan/opcua/sensors"]
+        TOPIC["MQTT Topic:nandan/opcua/sensors"]
     end
 
     %% Provisioning Connections
