@@ -44,6 +44,16 @@ This project uses **Terraform** to automate the creation of AWS IoT Core resourc
 * `aws_iot_policy`: Grants `iot:Connect` and `iot:Publish` permissions.
 * `local_file`: Automatically exports the keys to the local directory for Python.
 
+### AWS IoT Console Output
+![AWS IoT MQTT Client](assets/images/AWSIoTCore_MQTTClient.png)
+
+### OPC UA Server Execution
+![Terminal Output](assets/images/Python_OPCUA_Server.png)
+
+### OPC UA Publish Data to AWS IoTCore
+![AWS IoT Core Publish](assets/images/PythonOPCUA_AWSIoTCore_Publish.png)
+
+
 ## Architecture
 
 ```mermaid
@@ -101,12 +111,3 @@ graph TD
     class CERT,KEY,ROOT auth;
     class IOT,POL,THG,TOPIC cloud;
 ```
-
-### AWS IoT Console Output
-![AWS IoT MQTT Client](assets/images/AWSIoTCore_MQTTClient.png)
-
-### OPC UA Server Execution
-![Terminal Output](assets/images/Python_OPCUA_Server.png)
-
-### OPC UA Publish Data to AWS IoTCore
-![AWS IoT Core Publish](assets/images/PythonOPCUA_AWSIoTCore_Publish.png)
