@@ -72,9 +72,9 @@ This project uses **Terraform** to automate the creation of AWS IoT Core resourc
 	- Tags: source (e.g., nandan_virtualbox) to allow multi-asset filtering in SQL queries.
 	- Fields: Dynamic mapping of OPC UA Node values to Float64 fields.
 
-![Python OPCUA Data Ingestion to InfluxDB V3](assests/images/PythonOPCUA_InfluxDBV3_DataIngestion.png)
+![Python OPCUA Data Ingestion to InfluxDB V3](assets/images/PythonOPCUA_InfluxDBV3_DataIngestion.png)
 
-![InfluxDB V3 SQL Native Support for querying](assests/images/InfluxSQL_Query_SensorData.png)
+![InfluxDB V3 SQL Native Support for querying](assets/images/InfluxSQL_Query_SensorData.png)
 
 ## Architecture
 
