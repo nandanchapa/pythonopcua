@@ -59,6 +59,7 @@ This project uses **Terraform** to automate the creation of AWS IoT Core resourc
 - High-Performance Storage: Leverages the IOx engine for high-speed data ingestion and compression, optimized for time-series telemetry.
 - Security & Auth: Implemented a Token-based authentication layer managed via .env to secure the local API and CLI access.
 - Storage Persistence: Configured Docker volumes (influxdb3_data) to prevent data loss during container updates or host reboots.
+![InfluxDB V3](assets/images/InfluxDBV3_BaseTables.png)
 
 
 ## Data Ingestion & Dual-Write Strategy
@@ -69,6 +70,8 @@ This project uses **Terraform** to automate the creation of AWS IoT Core resourc
 	- Measurement: pythonopcua_sensors
 	- Tags: source (e.g., nandan_virtualbox) to allow multi-asset filtering in SQL queries.
 	- Fields: Dynamic mapping of OPC UA Node values to Float64 fields.
+![Python OPCUA Data Ingestion to InfluxDB V3](PythonOPCUA_InfluxDBV3_DataIngestion.png)
+![InfluxDB V3 SQL Native Support for querying](InfluxSQL_Query_SensorData.png)
 
 ## Architecture
 
